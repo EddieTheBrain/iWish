@@ -12,8 +12,7 @@ import java.time.LocalDate;
 public class Wish {
     private String name;
     private double price;
-    private LocalDate date;
+    private LocalDate dateOfCreation;
     private String link;
     private Priority priority; public enum Priority{HOCH, MITTEL, NIEDRIG}
-
 }
