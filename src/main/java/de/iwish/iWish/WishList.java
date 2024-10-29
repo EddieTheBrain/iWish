@@ -15,6 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class WishList {
     private final UUID wishListId = UUID.randomUUID();
+    private String name;
     private ArrayList<Wish> wishes;
 
     public ArrayList<Wish> getInstance(){
