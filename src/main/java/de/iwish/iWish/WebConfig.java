@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .addMapping("/**")
                 .allowedMethods("*")
                 .allowedOrigins(
-                        "http://localhost:5173"
+                        "http://localhost:5173",
+                        "https://iwishfrontend.onrender.com"
                 );
     }
 }
