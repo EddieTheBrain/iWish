@@ -1,6 +1,7 @@
 package de.iwish.iWish;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Wish {
+    @Id
     private final UUID wishId = UUID.randomUUID();
     private String name;
     private BigDecimal price;
