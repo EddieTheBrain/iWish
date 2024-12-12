@@ -1,6 +1,8 @@
 package de.iwish.iWish;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +20,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Wish {
     @Id
-    private final UUID wishId = UUID.randomUUID();
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private String name;
     private BigDecimal price;
     private LocalDate dateOfCreation;
