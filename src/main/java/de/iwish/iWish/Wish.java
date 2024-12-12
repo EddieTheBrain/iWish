@@ -16,7 +16,6 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Wish {
     @Id
@@ -27,4 +26,12 @@ public class Wish {
     private LocalDate dateOfCreation;
     private String link;
     private Priority priority; public enum Priority{HOCH, MITTEL, NIEDRIG}
+
+    public Wish(String name, BigDecimal price, LocalDate dateOfCreation, String link, Priority priority) {
+        this.name = name;
+        this.price = price;
+        this.dateOfCreation = dateOfCreation;
+        this.link = link;
+        this.priority = priority;
+    }
 }
