@@ -15,12 +15,12 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping
+@RequestMapping("/api/wishes")
 public class RestExampleController {
 
     private final WishService wishService;
 
-    @GetMapping(path = "/wish")
+    @GetMapping
     public ResponseEntity<List<Wish>> getWishes() {
         ArrayList<Wish> wishInstances = new ArrayList<>();
         wishService.getWishes().forEach(wishInstances::add);
