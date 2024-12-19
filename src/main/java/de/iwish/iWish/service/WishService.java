@@ -18,4 +18,8 @@ public class WishService {
     public Wish addWish(Wish wish) {
         return this.repository.save(wish);
     }
+
+    public void deleteWish(Wish wish) {
+        this.repository.delete(wish);
+    }
 }

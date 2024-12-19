@@ -32,4 +32,9 @@ public class RestExampleController {
         final Wish created = wishService.addWish(wish);
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
+
+    @DeleteMapping(path = "/{wish}")
+    public void deleteWish(@PathVariable Wish wish) {
+        wishService.deleteWish(wish);
+    }
 }
