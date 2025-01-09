@@ -12,10 +12,12 @@ import org.mockito.MockitoAnnotations;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 class WishServiceTest {
 
@@ -38,5 +40,29 @@ class WishServiceTest {
         final Iterable<Wish> resultAsIterable = wishService.getWishes();
         final List<Wish> result = StreamSupport.stream(resultAsIterable.spliterator(), false).toList();
         assertEquals(2, result.size());
+    }
+
+    @Test
+    void addWishTest() {
+        Wish newWish = new Wish("laptop", BigDecimal.valueOf(999.99), LocalDate.of(2024, 12, 25), "link3", Wish.Priority.MITTEL);
+
+        when(wishRepository.save(newWish)).thenReturn(newWish);
+
+        Wish result = wishService.addWish(newWish);
+
+        assertEquals(newWish.getName(), result.getName());
+        assertEquals(newWish.getPrice(), result.getPrice());
+        assertEquals(newWish.getPriority(), result.getPriority());
+        assertEquals(newWish.getLink(), result.getLink());
+        assertEquals(newWish.getDateOfCreation(), result.getDateOfCreation());
+    }
+
+    @Test
+    void deleteWishTest() {
+        Wish wishToDelete = new Wish("buch", BigDecimal.valueOf(1234), LocalDate.of(2022, 11, 23), "link2", Wish.Priority.NIEDRIG);
+
+        wishService.deleteWish(wishToDelete);
+
+        assertTrue(wishRepository.findById(wishToDelete.getId()).isEmpty());
     }
 }
