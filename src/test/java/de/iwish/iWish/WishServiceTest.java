@@ -34,13 +34,30 @@ class WishServiceTest {
         doReturn(List.of(handy, buch)).when(wishRepository).findAll();
     }
 
+    //GET
     @Test
-    void getWishes() {
+    void getWishesTest() {
         final Iterable<Wish> resultAsIterable = wishService.getWishes();
         final List<Wish> result = StreamSupport.stream(resultAsIterable.spliterator(), false).toList();
         assertEquals(2, result.size());
     }
 
+    @Test
+    void getWishes_noWishesFound() {
+        doReturn(List.of()).when(wishRepository).findAll();
+
+        Iterable<Wish> result = wishService.getWishes();
+        assertEquals(0, StreamSupport.stream(result.spliterator(), false).count());
+    }
+
+    @Test
+    void getWishes_repositoryFails() {
+        when(wishRepository.findAll()).thenThrow(new RuntimeException("Database error"));
+
+        assertThrows(RuntimeException.class, () -> wishService.getWishes());
+    }
+
+    //ADD
     @Test
     void addWishTest() {
         Wish newWish = new Wish("laptop", BigDecimal.valueOf(999.99), LocalDate.of(2024, 12, 25), "link3", Wish.Priority.MITTEL);
@@ -57,35 +74,21 @@ class WishServiceTest {
     }
 
     @Test
-    void deleteWishTest() {
-        Wish wishToDelete = new Wish("buch", BigDecimal.valueOf(1234), LocalDate.of(2022, 11, 23), "link2", Wish.Priority.NIEDRIG);
-
-        wishService.deleteWish(wishToDelete);
-
-        assertTrue(wishRepository.findById(wishToDelete.getId()).isEmpty());
-    }
-
-    @Test
-    void addWish_invalidWish_shouldThrowException() {
+    void addWish_invalidWish() {
         Wish invalidWish = new Wish("", BigDecimal.valueOf(-123), LocalDate.of(2024, 12, 25), "link3", Wish.Priority.MITTEL);
         when(wishRepository.save(invalidWish)).thenThrow(new IllegalArgumentException("Invalid wish"));
 
         assertThrows(IllegalArgumentException.class, () -> wishService.addWish(invalidWish));
     }
 
+    //DELETE
     @Test
-    void getWishes_noWishesFound_shouldReturnEmptyList() {
-        doReturn(List.of()).when(wishRepository).findAll();
+    void deleteWishTest() {
+        Wish wishToDelete = new Wish("buch", BigDecimal.valueOf(1234), LocalDate.of(2022, 11, 23), "link2", Wish.Priority.NIEDRIG);
 
-        Iterable<Wish> result = wishService.getWishes();
-        assertEquals(0, StreamSupport.stream(result.spliterator(), false).count());
-    }
+        wishService.deleteWish(wishToDelete);
 
-    @Test
-    void getWishes_repositoryFails_shouldThrowException() {
-        when(wishRepository.findAll()).thenThrow(new RuntimeException("Database error"));
-
-        assertThrows(RuntimeException.class, () -> wishService.getWishes());
+        assertTrue(wishRepository.findById(wishToDelete.getId()).isEmpty());
     }
 
     @Test
