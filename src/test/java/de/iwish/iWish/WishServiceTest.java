@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class WishServiceTest {
@@ -64,5 +63,13 @@ class WishServiceTest {
         wishService.deleteWish(wishToDelete);
 
         assertTrue(wishRepository.findById(wishToDelete.getId()).isEmpty());
+    }
+
+    @Test
+    void addWish_invalidWish_shouldThrowException() {
+        Wish invalidWish = new Wish("", BigDecimal.valueOf(-123), LocalDate.of(2024, 12, 25), "link3", Wish.Priority.MITTEL);
+        when(wishRepository.save(invalidWish)).thenThrow(new IllegalArgumentException("Invalid wish"));
+
+        assertThrows(IllegalArgumentException.class, () -> wishService.addWish(invalidWish));
     }
 }
