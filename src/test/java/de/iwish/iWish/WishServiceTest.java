@@ -80,4 +80,11 @@ class WishServiceTest {
         Iterable<Wish> result = wishService.getWishes();
         assertEquals(0, StreamSupport.stream(result.spliterator(), false).count());
     }
+
+    @Test
+    void getWishes_repositoryFails_shouldThrowException() {
+        when(wishRepository.findAll()).thenThrow(new RuntimeException("Database error"));
+
+        assertThrows(RuntimeException.class, () -> wishService.getWishes());
+    }
 }
