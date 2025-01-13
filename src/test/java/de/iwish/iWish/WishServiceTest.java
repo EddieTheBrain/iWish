@@ -87,4 +87,13 @@ class WishServiceTest {
 
         assertThrows(RuntimeException.class, () -> wishService.getWishes());
     }
+
+    @Test
+    void deleteWish_callsRepositoryDelete() {
+        Wish wishToDelete = new Wish("buch", BigDecimal.valueOf(1234), LocalDate.of(2022, 11, 23), "link2", Wish.Priority.NIEDRIG);
+
+        wishService.deleteWish(wishToDelete);
+
+        verify(wishRepository, times(1)).delete(wishToDelete);
+    }
 }
