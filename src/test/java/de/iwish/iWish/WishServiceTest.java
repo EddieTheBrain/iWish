@@ -72,4 +72,12 @@ class WishServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> wishService.addWish(invalidWish));
     }
+
+    @Test
+    void getWishes_noWishesFound_shouldReturnEmptyList() {
+        doReturn(List.of()).when(wishRepository).findAll();
+
+        Iterable<Wish> result = wishService.getWishes();
+        assertEquals(0, StreamSupport.stream(result.spliterator(), false).count());
+    }
 }
