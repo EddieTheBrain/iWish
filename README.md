@@ -8,5 +8,6 @@ Features
 	• Priorisierung: Wünsche können nach Priorität sortiert werden.
 	• Teilen: Wunschlisten können mit Freunden und Familie geteilt werden.
     • Preise: Jedes Produkt wird mit einem Preis versehen
-    • Sortieren (und Filtern): finde genau den Wunsch, den du suchst
     • Link: Jeder Wunsch hat einen Link, um genau das richtige zu finden
+    • Löschen von Wünschen: falls der Wunsch erfüllt wurde
+    • Dark-Mode: für maximalen Flaire
